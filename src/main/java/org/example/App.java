@@ -13,12 +13,11 @@ public class App {
         do {
             printMainMenu();
             userSelect = (scanner.next().charAt(0));
-            scanner.nextLine();
 
             switch (userSelect) {
                 case '1' -> {
                     System.out.print("INMATNING\n");
-                    optionInmatning(el_pris);
+                    optionInmatning(el_pris , scanner);
                 }
                 case '2' -> {
                     System.out.print("MIN, MAX & MEDEL\n");
@@ -52,19 +51,21 @@ public class App {
 
     }
 
-    public static void optionInmatning(int[] el_pris) {
+    public static void optionInmatning(int[] el_pris , Scanner scanner) {
         try {
-            Scanner scanner = new Scanner(System.in);
             System.out.print("Inmatning av elpriser (hela ören per kW/h):\n");
-            for (int i = 0; i < el_pris.length; i++) {
-                System.out.print("Timmen " + i + "- " + (i + 1) + ": \n");
-                el_pris[i] = scanner.nextInt();
+            if (scanner.hasNext()) {
+                for (int i = 0; i < el_pris.length; i++) {
+                    System.out.print(i + "-" + (i + 1) + ": \n");
+                    el_pris[i] = Integer.parseInt(scanner.next());
+
+                }
 
             }
+
             System.out.print("Inmatning av elpriserna har registrerats. \n");
             System.out.print(Arrays.toString(el_pris) + "\n");
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.print(e + "\n");
         }
 
@@ -100,16 +101,30 @@ public class App {
         System.out.print("Medelpriset är: " + sum / elpriser.length + "\n");
     }
 
-    public static void printPricesSorted(int[] elpriser) {
-        int[] kopieradePriser = Arrays.copyOf(elpriser, elpriser.length);
-        Arrays.sort(kopieradePriser);
+    public static void printPricesSorted(int[] el_priser) {
+        // Skapa en struktur för att lagra tid och prisinformation
+        int[][] tidOchPris = new int[24][2];
+        for (int i = 0; i < el_priser.length; i++) {
+            tidOchPris[i][0] = i;      // Timme
+            tidOchPris[i][1] = el_priser[i]; // Pris
+        }
 
-        System.out.print("Här är alla elpriser sorterade i ordning, dyrast överst:\n");
-        for (int i = elpriser.length - 1; i >= 0; i--) {
-            System.out.print("kl. " + i + " - " + (i + 1) + ": " + kopieradePriser[i] + " öre\n");
+        // Sortera tidOchPris baserat på pris i fallande ordning (dyrast först)
+        Arrays.sort(tidOchPris, (a, b) -> Integer.compare(b[1], a[1]));
 
+
+        for (int i = 0; i < tidOchPris.length; i++) {
+            int hour = tidOchPris[i][0];
+            int price = tidOchPris[i][1];
+
+            String formattedHour = String.format("%02d", hour); // Formatera timmen med ledande nollor
+
+            System.out.print(formattedHour + "-" + String.format("%02d", hour + 1) + " " + price + " öre\n");
         }
     }
+
+
+
 
     public static void optimalLaddningsTid(int[] elpriser) {
         int bestStartingHour = 0;
