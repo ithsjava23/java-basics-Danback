@@ -1,4 +1,7 @@
 package org.example;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 
 import java.util.Scanner;
@@ -96,9 +99,9 @@ public class App {
 
         //double average = (double) sum / elpriser.length;
 
-        System.out.print("Lägsta priset är: " + min + " öre (klockan " + minHour + " - " + (minHour + 1) + ")\n");
-        System.out.print("Högsta priset är: " + max + " öre (klockan " + maxHour + " - " + (maxHour + 1) + ")\n");
-        System.out.print("Medelpriset är: " + sum / elpriser.length + "\n");
+        System.out.print("Lägsta pris: " + min + " öre (klockan " + minHour + " - " + (minHour + 1) + ")\n");
+        System.out.print("Högsta pris: " + max + " öre (klockan " + maxHour + " - " + (maxHour + 1) + ")\n");
+        System.out.print("Medelpris: " + sum / elpriser.length + "\n");
     }
 
     public static void printPricesSorted(int[] el_priser) {
@@ -126,28 +129,29 @@ public class App {
 
 
 
+
     public static void optimalLaddningsTid(int[] elpriser) {
         int bestStartingHour = 0;
-        int bestEndingHour = 3;
         int sumOfBest = elpriser[0] + elpriser[1] + elpriser[2] + elpriser[3];
 
-
         for (int startHour = 1; startHour <= elpriser.length - 4; startHour++) {
-            int stopHour = startHour + 3;
             int summa = elpriser[startHour] + elpriser[startHour + 1] + elpriser[startHour + 2] + elpriser[startHour + 3];
 
             if (summa < sumOfBest) {
                 sumOfBest = summa;
                 bestStartingHour = startHour;
-                bestEndingHour = stopHour;
             }
-
         }
-        int medelpris = sumOfBest / 4;
 
-        System.out.print("Bästa laddningstid är (4h): kl " + bestStartingHour + " - " + bestEndingHour + "\n");
-        System.out.print("Medelpris under dessa timmar är: " + medelpris + " öre per kW/h\n");
+        double medelpris = (double) sumOfBest / 4;
 
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(new Locale("sv", "SE")));
+
+        String formattedMedelpris = decimalFormat.format(medelpris);
+
+        System.out.print("Påbörja laddning klockan " + bestStartingHour + "\n");
+        System.out.print("Medelpris 4h: " + formattedMedelpris + " öre/kWh\n");
     }
 
 }
