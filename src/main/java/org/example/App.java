@@ -126,9 +126,9 @@ public class App {
         Arrays.sort(tidOchPris, (a, b) -> Integer.compare(b[1], a[1]));
 
 
-        for (int i = 0; i < tidOchPris.length; i++) {
-            int hour = tidOchPris[i][0];
-            int price = tidOchPris[i][1];
+        for (int[] ochPris : tidOchPris) {
+            int hour = ochPris[0];
+            int price = ochPris[1];
 
             String formattedHour = String.format("%02d", hour);
 
