@@ -65,7 +65,7 @@ public class PresentationTest {
         //32
         //10
         //-12
-        //Medel 22.25
+        //Medel 22.4
         provideInput(input);
         App.main(null);
         String response = """

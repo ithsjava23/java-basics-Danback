@@ -1,4 +1,5 @@
 package org.example;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -20,7 +21,7 @@ public class App {
             switch (userSelect) {
                 case '1' -> {
                     System.out.print("INMATNING\n");
-                    optionInmatning(el_pris , scanner);
+                    optionInmatning(el_pris, scanner);
                 }
                 case '2' -> {
                     System.out.print("MIN, MAX & MEDEL\n");
@@ -54,7 +55,7 @@ public class App {
 
     }
 
-    public static void optionInmatning(int[] el_pris , Scanner scanner) {
+    public static void optionInmatning(int[] el_pris, Scanner scanner) {
         try {
             System.out.print("Inmatning av elpriser (hela ören per kW/h):\n");
             if (scanner.hasNext()) {
@@ -94,25 +95,26 @@ public class App {
                 max = price;
                 maxHour = i;
             }
-
         }
 
-        //double average = (double) sum / elpriser.length;
+        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
 
-        System.out.print("Lägsta pris: " + min + " öre (klockan " + minHour + " - " + (minHour + 1) + ")\n");
-        System.out.print("Högsta pris: " + max + " öre (klockan " + maxHour + " - " + (maxHour + 1) + ")\n");
-        System.out.print("Medelpris: " + sum / elpriser.length + "\n");
+        double medelpris = (double) sum / elpriser.length;
+        String formattedMedelpris = decimalFormat.format(medelpris);
+
+        System.out.print("Lägsta pris: " + minHour + "-" + (minHour + 1) + ", " + min + " öre/kWh" + "\n");
+        System.out.print("Högsta pris: " + maxHour + "-" + (maxHour + 1) + ", " + max + " öre/kWh" + "\n");
+        System.out.print("Medelpris: " + formattedMedelpris + " öre/kWh" + "\n");
     }
 
+
     public static void printPricesSorted(int[] el_priser) {
-        // Skapa en struktur för att lagra tid och prisinformation
         int[][] tidOchPris = new int[24][2];
         for (int i = 0; i < el_priser.length; i++) {
-            tidOchPris[i][0] = i;      // Timme
-            tidOchPris[i][1] = el_priser[i]; // Pris
+            tidOchPris[i][0] = i;
+            tidOchPris[i][1] = el_priser[i];
         }
 
-        // Sortera tidOchPris baserat på pris i fallande ordning (dyrast först)
         Arrays.sort(tidOchPris, (a, b) -> Integer.compare(b[1], a[1]));
 
 
@@ -120,14 +122,11 @@ public class App {
             int hour = tidOchPris[i][0];
             int price = tidOchPris[i][1];
 
-            String formattedHour = String.format("%02d", hour); // Formatera timmen med ledande nollor
+            String formattedHour = String.format("%02d", hour);
 
             System.out.print(formattedHour + "-" + String.format("%02d", hour + 1) + " " + price + " öre\n");
         }
     }
-
-
-
 
 
     public static void optimalLaddningsTid(int[] elpriser) {
