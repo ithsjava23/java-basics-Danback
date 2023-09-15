@@ -95,7 +95,6 @@ public class App {
             }
         }
 
-        // Specify Swedish locale and set comma as the decimal separator
         DecimalFormatSymbols swedishSymbols = new DecimalFormatSymbols(new Locale("sv", "SE"));
         swedishSymbols.setDecimalSeparator(',');
 
