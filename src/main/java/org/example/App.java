@@ -95,7 +95,11 @@ public class App {
             }
         }
 
-        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+        // Specify Swedish locale and set comma as the decimal separator
+        DecimalFormatSymbols swedishSymbols = new DecimalFormatSymbols(new Locale("sv", "SE"));
+        swedishSymbols.setDecimalSeparator(',');
+
+        DecimalFormat decimalFormat = new DecimalFormat("#0.00", swedishSymbols);
 
         double medelpris = (double) sum / elpriser.length;
         String formattedMedelpris = decimalFormat.format(medelpris);
@@ -109,8 +113,8 @@ public class App {
             System.out.print("Högsta pris: " + maxHour + "-" + (maxHour + 1) + ", " + max + " öre/kWh" + "\n");
             System.out.print("Medelpris: " + formattedMedelpris + " öre/kWh" + "\n");
         }
-
     }
+
 
 
     public static void printPricesSorted(int[] el_priser) {
