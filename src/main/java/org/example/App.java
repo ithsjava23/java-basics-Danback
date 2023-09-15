@@ -3,8 +3,6 @@ package org.example;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-
-
 import java.util.Scanner;
 import java.util.Arrays;
 
@@ -151,14 +149,15 @@ public class App {
 
         double medelpris = (double) sumOfBest / 4;
 
+        DecimalFormatSymbols swedishSymbols = new DecimalFormatSymbols(new Locale("sv", "SE"));
+        swedishSymbols.setDecimalSeparator(',');
 
-        DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(new Locale("sv", "SE")));
+        DecimalFormat decimalFormat = new DecimalFormat("#.##", swedishSymbols);
 
         String formattedMedelpris = decimalFormat.format(medelpris);
 
         System.out.print("Påbörja laddning klockan " + bestStartingHour + "\n");
         System.out.print("Medelpris 4h: " + formattedMedelpris + " öre/kWh\n");
     }
-
 }
 
