@@ -106,14 +106,13 @@ public class App {
             System.out.print("Lägsta pris: " + "0" + minHour + "-" + "0" + (minHour + 1) + ", " + min + " öre/kWh" + "\n");
             System.out.print("Högsta pris: " + "0" + maxHour + "-" + "0" + (maxHour + 1) + ", " + max + " öre/kWh" + "\n");
             System.out.print("Medelpris: " + formattedMedelpris + " öre/kWh" + "\n");
+        } else {
+            System.out.print("Lägsta pris: " + minHour + "-" + (minHour + 1) + ", " + min + " öre/kWh" + "\n");
+            System.out.print("Högsta pris: " + maxHour + "-" + (maxHour + 1) + ", " + max + " öre/kWh" + "\n");
+            System.out.print("Medelpris: " + formattedMedelpris + " öre/kWh" + "\n");
         }
-        else {
-        System.out.print("Lägsta pris: " + minHour + "-" + (minHour + 1) + ", " + min + " öre/kWh" + "\n");
-        System.out.print("Högsta pris: " + maxHour + "-" + (maxHour + 1) + ", " + max + " öre/kWh" + "\n");
-        System.out.print("Medelpris: " + formattedMedelpris + " öre/kWh" + "\n");
-    }
 
-}
+    }
 
 
     public static void printPricesSorted(int[] el_priser) {
